@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="repository.UserMapper">
+
+    <insert id = "signUp">
+        INSERT INTO user('email', 'pw', 'name', 'nickname')
+    </insert>
+
+    <select id="getUserList" resultType="string">
+            SELECT * FROM user
+            <where>
+                <if todo="user.name != null">AND 'name' = #{user.name}</if>
+
+            </where>
+    </select>
+
+    <select id="getUserList" resultType="string">
+        SELECT * FROM user
+        <where>
+            <if test="user.name != null">AND 'name' = #{user.name}</if>
+
+        </where>
+    </select>
+
+    <select id="getUserList" resultType="string">
+        SELECT * FROM user
+        <where>
+            <if test="user.name != null">AND 'name' = #{user.name}</if>
+
+        </where>
+    </select>
+
+    <select id="getUserList" resultType="string">
+        SELECT * FROM user
+        <where>
+            <if test="user.name != null">AND 'name' = #{user.name}</if>
+
+        </where>
+    </select>
+
+    <select id="getUserList" resultType="string">
+        SELECT * FROM user
+        <where>
+            <if test="user.name != null">AND 'name' = #{user.name}</if>
+
+        </where>
+    </select>
+</mapper>
+
