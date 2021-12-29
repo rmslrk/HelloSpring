@@ -46,7 +46,7 @@ public class Jwt {
                 .setClaims(payloads) // Claims 설정
                 .setSubject("auth-user") // 토큰 용도
                 .setExpiration(ext) // 토큰 만료 시간 설정
-                .signWith(SignatureAlgorithm.HS256, (SECRET_KEY + account.getSalt()).getBytes()) // HS256과 Key로 Sign
+                .signWith(SignatureAlgorithm.HS256, (SECRET_KEY + user.getId()).getBytes()) // HS256과 Key로 Sign
                 .compact(); // 토큰 생성
 
         return jwt;
@@ -55,8 +55,8 @@ public class Jwt {
     //토큰 검증
     public Map<String, Object> verifyJWT(String jwt) throws Exception {
         Map<String, Object> claimMap = null;
-        long uid = getUid(jwt);
-        String salt = UserMapper.getSaltToUid(uid);
+        long uid = getId(jwt);
+        String salt = UserMapper.getSaltToId(uid);
 
         Claims claims = Jwts.parser()
                 .setSigningKey((SECRET_KEY + salt).getBytes("UTF-8")) // Set Key
@@ -67,13 +67,13 @@ public class Jwt {
         return claimMap;
     }
 
-    private Long getUid(String jwt) throws Exception {
+    private Long getId(String jwt) throws Exception {
         if (jwt.chars().filter(c -> c == '.').count() != 2)
             throw new Exception("유효하지 않은 토큰입니다.");
 
         Map<String, Object> map;
         map = new ObjectMapper().readValue(Base64.base64Decode(jwt.split("\\.")[1]), Map.class);
-        if (map.get("uid") == null || map.get("nickname") == null)
+        if (map.get("id") == null || map.get("nickname") == null)
             throw new Exception("유효하지 않은 토큰입니다.");
 
         return Long.parseLong(map.get("uid").toString());
