@@ -7,46 +7,74 @@
 
     <insert id = "signUp">
         INSERT INTO user('email', 'pw', 'name', 'nickname')
+        VALUES (#{user.email}, #{user.pw}, #{user.name}, #{user.nickname})
     </insert>
 
-    <select id="getUserList" resultType="string">
-            SELECT * FROM user
-            <where>
-                <if todo="user.name != null">AND 'name' = #{user.name}</if>
+    <update id ="setAge">
+        UPDATE user
+        SET age = #{age}
+        WHERE uid = #{uid}
+    </update>
 
-            </where>
+    <update id ="setSex">
+        UPDATE user
+        SET sex = #{sex}
+        WHERE uid = #{uid}
+    </update>
+
+    <update id ="setPhone">
+        UPDATE user
+        SET phone_number = #{phone_number}
+        WHERE uid = #{uid}
+    </update>
+
+    <update id ="setAddress">
+        UPDATE user
+        SET address = #{address}
+        WHERE uid = #{uid}
+    </update>
+
+    <update id ="setSalt">
+        UPDATE user
+        SET salt = #{salt}
+        WHERE uid = #{uid}
+    </update>
+
+    <select id ="getSalt" resultType = "string">
+        SELECT salt
+        FROM user
+        WHERE uid = #{uid} and is_deleted = 0
     </select>
 
-    <select id="getUserList" resultType="string">
-        SELECT * FROM user
-        <where>
-            <if test="user.name != null">AND 'name' = #{user.name}</if>
-
-        </where>
+    <select id="getUidToEmail" resultType="string">
+        SELECT uid
+        FROM user
+        WHERE email = #{email}
     </select>
 
-    <select id="getUserList" resultType="string">
-        SELECT * FROM user
-        <where>
-            <if test="user.name != null">AND 'name' = #{user.name}</if>
-
-        </where>
+    <select id="getPwToEmail" resultType="string">
+        SELECT pw
+        FROM user
+        WHERE email = #{email}
     </select>
 
-    <select id="getUserList" resultType="string">
-        SELECT * FROM user
-        <where>
-            <if test="user.name != null">AND 'name' = #{user.name}</if>
-
-        </where>
+    <select id="getSaltToUid" resultType="string">
+        SELECT salt
+        FROM user
+        WHERE uid = #{uid}
     </select>
 
-    <select id="getUserList" resultType="string">
-        SELECT * FROM user
-        <where>
-            <if test="user.name != null">AND 'name' = #{user.name}</if>
-
-        </where>
+    <select id="getUsertoEmail" resultType="domain.UserDTO">
+        SELECT pw,nickname,uid
+        FROM user
+        WHERE email = #{email} and is_deleted = 0
     </select>
+
+    <update id="DeleteUser">
+        UPDATE user
+        SET is_deleted = 1
+        WHERE uid = #{uid}
+    </update>
+
 </mapper>
 

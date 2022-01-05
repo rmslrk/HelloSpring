@@ -1,12 +1,12 @@
 package util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.org.apache.xml.internal.security.algorithms.SignatureAlgorithm;
 import com.sun.xml.internal.messaging.saaj.util.Base64;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import domain.UserDTO;
@@ -18,7 +18,9 @@ import java.util.Map;
 
 @Service
 public class Jwt {
-    private static final String SECRET_KEY = "PRIVATE_KEY";  // TODO: Key는 하드코딩 하지말고 외부에서 가져오는것을 권장
+
+    @Value("${token.key}")
+    private String SECRET_KEY;  // TODO: Key는 하드코딩 하지말고 외부에서 가져오는것을 권장
 
     @Autowired
     private UserMapper userMapper;
@@ -32,7 +34,7 @@ public class Jwt {
 
         //payload 부분 설정
         Map<String, Object> payloads = new HashMap<>();
-        payloads.put("uid", user.getId());
+        payloads.put("id", user.getUid());
         payloads.put("nickname", user.getNickname());
 
         long expiredTime = 1000L * 60 * 60 * 5; // TODO: 토큰 유효 시간 (24시간)
@@ -46,17 +48,17 @@ public class Jwt {
                 .setClaims(payloads) // Claims 설정
                 .setSubject("auth-user") // 토큰 용도
                 .setExpiration(ext) // 토큰 만료 시간 설정
-                .signWith(SignatureAlgorithm.HS256, (SECRET_KEY + user.getId()).getBytes()) // HS256과 Key로 Sign
+                .signWith(SignatureAlgorithm.HS256, (SECRET_KEY + user.getSalt()).getBytes()) // HS256과 Key로 Sign
                 .compact(); // 토큰 생성
 
         return jwt;
     }
 
-    //토큰 검증
     public Map<String, Object> verifyJWT(String jwt) throws Exception {
         Map<String, Object> claimMap = null;
-        long uid = getId(jwt);
-        String salt = UserMapper.getSaltToId(uid);
+        long uid = getUid(jwt);
+        UserMapper userMapper = null;
+        String salt = userMapper.getSaltToUid(uid);
 
         Claims claims = Jwts.parser()
                 .setSigningKey((SECRET_KEY + salt).getBytes("UTF-8")) // Set Key
@@ -67,7 +69,7 @@ public class Jwt {
         return claimMap;
     }
 
-    private Long getId(String jwt) throws Exception {
+    private Long getUid(String jwt) throws Exception {
         if (jwt.chars().filter(c -> c == '.').count() != 2)
             throw new Exception("유효하지 않은 토큰입니다.");
 

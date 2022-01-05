@@ -1,27 +1,33 @@
 package domain;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 public class UserDTO {
-    protected int id;
+    protected long uid;
+    protected String email;
+    protected String pw;
     protected String name;
+    protected String nickname;
     protected int age;
     protected int sex;
-    protected String nickname;
-    protected String email;
     protected String phone_number;
     protected String address;
     protected boolean is_deleted;
     protected Timestamp created_at;
     protected Timestamp updated_at;
 
-    public void setId(int id) {
-        this.id = id;
+    protected String salt;
+
+    public void setUid(long uid) {
+        this.uid = uid;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setPw(String pw) {
+        this.pw = pw;
     }
 
     public void setAge(int age) {
@@ -60,12 +66,16 @@ public class UserDTO {
         this.updated_at = updated_at;
     }
 
-    public int getId() {
-        return id;
+    public long getUid() {
+        return uid;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getPw() {
+        return pw;
     }
 
     public int getAge() {
@@ -99,4 +109,13 @@ public class UserDTO {
     public Timestamp getUpdated_at() {
         return updated_at;
     }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
 }

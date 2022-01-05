@@ -1,20 +1,16 @@
 package service;
 
-import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
-import repository.UserMapper;
+import domain.UserDTO;
+import response.BaseResponse;
 
-@Service
-public class UserServiceImpl implements UserService{
+import java.util.Map;
 
-    @Autowired
-    private UserMapper userMapper;
+public interface UserServiceImpl{
+    BaseResponse signUp(UserDTO user) throws Exception;
 
-    @Override
-    public String mybatisTest(String name){
-        return userMapper.mybatisTest(name);
-    }
+    Map<String, Object> checkKey(String key) throws Exception;
 
-    @Override
-    public String
+    Map<String, String> login(UserDTO user) throws Exception;
+
+    Map<String, String> refresh() throws Exception;
 }
