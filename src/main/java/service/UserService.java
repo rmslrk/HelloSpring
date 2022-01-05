@@ -3,6 +3,7 @@ package service;
 import domain.UserDTO;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -10,7 +11,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import repository.UserMapper;
 import response.BaseResponse;
 import util.Jwt;
-
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,6 +27,9 @@ public class UserService implements UserServiceImpl {
 
      @Autowired
      private Jwt jwt;
+
+     @Value("{token.user.name}")
+     private String accessTokenName;
 
      @Override
      public BaseResponse signUp(UserDTO user) throws Exception {
@@ -60,6 +63,37 @@ public class UserService implements UserServiceImpl {
       return new BaseResponse("회원가입에 성공했습니다.", HttpStatus.OK);
      }
 
+     /*
+    // token의 id를 가져와 User를 반환하는 Method
+    public UserDTO getLoginUser() throws Exception{
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String token = request.getHeader(accessTokenName);
+        if ( token == null){
+            return null;
+        }
+        else {
+            // user id로 User를 select 하는것은 자유롭게 해도 좋으나, salt값은 조회,수정 하면안된다. 만약 참고할 일이있으면 정수현에게 다렉을 보내도록하자.
+            if ( jwt.isValid(token,0) ==0 ) {
+                Map<String, Object> payloads = jwt.validateFormat(token, 0);
+                Long id = Long.valueOf(String.valueOf(payloads.get("id")));
+                return userMapper.getMe(id);
+            }
+            else{
+                throw new AccessTokenInvalidException(ErrorMessage.ACCESS_FORBIDDEN_AUTH_INVALID_EXCEPTION);
+            }
+        }
+    }
+*/
+
+    @Override
+    public void updateUser(UserDTO user) throws  Exception{
+
+        //UserDTO dbUser = this.getLoginUser();
+
+        //updateUser
+        //userMapper.updateUser(dbUser.getUid() ,user.getAge(),user.getSex(), user.getPhone_number(),user.getAddress());
+
+    }
 
     @Override
     public Map<String, Object> checkKey(String token) throws Exception {

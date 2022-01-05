@@ -48,6 +48,7 @@
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.21" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context:3.2.18.RELEASE" />
           <element id="library" level="project" name="mysql-connector-java-8.0.26" />
+          <element id="library" level="project" name="Java EE 6-Java EE 6" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="HelloSpring/web/webapp" />

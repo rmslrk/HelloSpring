@@ -7,13 +7,7 @@ import org.springframework.stereotype.Repository;
 public interface UserMapper {
     void signUp(UserDTO user);
 
-    void setAge(Long uid, int age);
-
-    void setSex(Long uid, int sex);
-
-    void setPhone(Long uid, String phone_number);
-
-    void setAddress(Long uid, String address);
+    void updateUser(Long uid, int age, int sex, String phone_number, String address);
 
     short getUserNumToEmail(String email);
 
