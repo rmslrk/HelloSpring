@@ -9,13 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import service.UserService;
-import service.UserServiceImpl;
 
 @Controller
 public class UserController {
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     // 회원가입
     @RequestMapping(value = "/signUp", method = RequestMethod.POST)

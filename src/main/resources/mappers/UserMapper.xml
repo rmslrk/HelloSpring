@@ -13,31 +13,31 @@
     <update id ="setAge">
         UPDATE user
         SET age = #{age}
-        WHERE uid = #{uid}
+        WHERE uid = #{uid} AND is_deleted = 0;
     </update>
 
     <update id ="setSex">
         UPDATE user
         SET sex = #{sex}
-        WHERE uid = #{uid}
+        WHERE uid = #{uid} AND is_deleted = 0;
     </update>
 
     <update id ="setPhone">
         UPDATE user
         SET phone_number = #{phone_number}
-        WHERE uid = #{uid}
+        WHERE uid = #{uid} AND is_deleted = 0;
     </update>
 
     <update id ="setAddress">
         UPDATE user
         SET address = #{address}
-        WHERE uid = #{uid}
+        WHERE uid = #{uid} AND is_deleted = 0;
     </update>
 
     <update id ="setSalt">
         UPDATE user
         SET salt = #{salt}
-        WHERE uid = #{uid}
+        WHERE uid = #{uid} AND is_deleted = 0;
     </update>
 
     <select id ="getSalt" resultType = "string">
@@ -49,19 +49,19 @@
     <select id="getUidToEmail" resultType="string">
         SELECT uid
         FROM user
-        WHERE email = #{email}
+        WHERE email = #{email} AND is_deleted = 0;
     </select>
 
     <select id="getPwToEmail" resultType="string">
         SELECT pw
         FROM user
-        WHERE email = #{email}
+        WHERE email = #{email} AND is_deleted = 0;
     </select>
 
     <select id="getSaltToUid" resultType="string">
         SELECT salt
         FROM user
-        WHERE uid = #{uid}
+        WHERE uid = #{uid} AND is_deleted = 0;
     </select>
 
     <select id="getUsertoEmail" resultType="domain.UserDTO">

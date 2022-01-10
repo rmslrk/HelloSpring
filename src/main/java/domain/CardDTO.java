@@ -2,8 +2,8 @@ package domain;
 
 import java.sql.Timestamp;
 
-public class TodoDTO {
-    protected long tid;
+public class CardDTO {
+    protected long cid;
     protected String title;
     protected String content;
     protected Timestamp target_date;
@@ -12,10 +12,8 @@ public class TodoDTO {
     protected Timestamp created_at;
     protected Timestamp updated_at;
 
-    protected String salt;
-
-    public long getTid() {
-        return tid;
+    public long getCid() {
+        return cid;
     }
 
     public String getTitle() {
@@ -46,8 +44,8 @@ public class TodoDTO {
         return updated_at;
     }
 
-    public void setTid(long tid) {
-        this.tid = tid;
+    public void setCid(long cid) {
+        this.cid = cid;
     }
 
     public void setTitle(String title) {
@@ -78,11 +76,4 @@ public class TodoDTO {
         this.updated_at = updated_at;
     }
 
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
 }
