@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 public interface UserMapper {
     void signUp(UserDTO user);
 
-    void updateUser(Long uid, int age, int sex, String phone_number, String address);
+    void setUserInfo(Long uid, int age, int sex, String phone_number, String address);
 
     short getUserNumToEmail(String email);
 
@@ -22,4 +22,8 @@ public interface UserMapper {
     String getPwtoEmail(String email);
 
     void setSalt(Long uid, String salt);
+
+    UserDTO getMe(Long uid);
+
+    void delete(Long uid);
 }

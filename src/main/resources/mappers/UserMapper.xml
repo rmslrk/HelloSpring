@@ -6,45 +6,15 @@
 <mapper namespace="repository.UserMapper">
 
     <insert id = "signUp">
-        INSERT INTO user('email', 'pw', 'name', 'nickname')
-        VALUES (#{user.email}, #{user.pw}, #{user.name}, #{user.nickname})
+        INSERT INTO user('email', 'pw', 'name', 'nickname', 'age', 'sex', 'phone_number', 'address')
+        VALUES (#{user.email}, #{user.pw}, #{user.name}, #{user.nickname}, #{user.age}, #{user.sex}, #{user.phone_number}, #{user.address})
     </insert>
 
-    <update id ="setAge">
+    <update id ="setUserInfo">
         UPDATE user
-        SET age = #{age}
+        SET age = #{age}, sex = #{sex}, phone_number = #{phone_number}, address = #{address}
         WHERE uid = #{uid} AND is_deleted = 0;
     </update>
-
-    <update id ="setSex">
-        UPDATE user
-        SET sex = #{sex}
-        WHERE uid = #{uid} AND is_deleted = 0;
-    </update>
-
-    <update id ="setPhone">
-        UPDATE user
-        SET phone_number = #{phone_number}
-        WHERE uid = #{uid} AND is_deleted = 0;
-    </update>
-
-    <update id ="setAddress">
-        UPDATE user
-        SET address = #{address}
-        WHERE uid = #{uid} AND is_deleted = 0;
-    </update>
-
-    <update id ="setSalt">
-        UPDATE user
-        SET salt = #{salt}
-        WHERE uid = #{uid} AND is_deleted = 0;
-    </update>
-
-    <select id ="getSalt" resultType = "string">
-        SELECT salt
-        FROM user
-        WHERE uid = #{uid} and is_deleted = 0
-    </select>
 
     <select id="getUidToEmail" resultType="string">
         SELECT uid
@@ -68,6 +38,12 @@
         SELECT pw,nickname,uid
         FROM user
         WHERE email = #{email} and is_deleted = 0
+    </select>
+
+    <select id="getMe" resultType="domain.UserDTO">
+        SELECT email,pw,name,nickname,age,sex,phone_number,address,is_deleted
+        FROM user
+        WHERE uid = #{uid} and is_deleted =0
     </select>
 
     <update id="DeleteUser">

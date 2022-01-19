@@ -7,4 +7,5 @@ public interface ListService {
     ListDTO getList(Long cid) throws Exception;
     void deleteList(ListDTO listDTO) throws Exception;
     void updateList(ListDTO listDTO) throws Exception;
+    void moveList(ListDTO listDTO) throws Exception;
 }

@@ -43,6 +43,13 @@ public class ListController {
         return new ResponseEntity( new BaseResponse("리스트가 정상적으로 수정됐습니다.", HttpStatus.OK), HttpStatus.OK);
     }
 
+    @ApiOperation( value = "리스트 이동", notes = "리스트를 이동합니다.")
+    @RequestMapping(value = "/moveList", method = RequestMethod.PATCH)
+    public ResponseEntity moveList(@Validated(ListDTO.class) @RequestBody ListDTO list) throws Exception{
+        listService.moveList(list);
+        return new ResponseEntity( new BaseResponse("리스트가 정상적으로 이동했습니다.", HttpStatus.OK), HttpStatus.OK);
+    }
+
     @ApiOperation( value = "리스트 삭제", notes = "리스트를 삭제합니다.")
     @RequestMapping(value = "/deleteList", method = RequestMethod.DELETE)
     public ResponseEntity deleteMemo(@RequestBody ListDTO list) throws Exception{

@@ -4,16 +4,22 @@ import java.sql.Timestamp;
 
 public class CardDTO {
     protected long cid;
+    protected long lid;
     protected String title;
     protected String content;
     protected Timestamp target_date;
     protected boolean success;
+    protected int position;
     protected boolean is_deleted;
     protected Timestamp created_at;
     protected Timestamp updated_at;
 
     public long getCid() {
         return cid;
+    }
+
+    public long getLid() {
+        return lid;
     }
 
     public String getTitle() {
@@ -32,6 +38,8 @@ public class CardDTO {
         return success;
     }
 
+    public int getPosition() { return position; }
+
     public boolean isIs_deleted() {
         return is_deleted;
     }
@@ -46,6 +54,10 @@ public class CardDTO {
 
     public void setCid(long cid) {
         this.cid = cid;
+    }
+
+    public void setLid(long lid) {
+        this.lid = lid;
     }
 
     public void setTitle(String title) {
@@ -63,6 +75,8 @@ public class CardDTO {
     public void setSuccess(boolean success) {
         this.success = success;
     }
+
+    public void setPosition(int position) { this.position = position; }
 
     public void setIs_deleted(boolean is_deleted) {
         this.is_deleted = is_deleted;

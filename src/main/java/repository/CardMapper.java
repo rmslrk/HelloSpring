@@ -5,13 +5,17 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CardMapper {
-    void createCard(CardDTO cardDTO);
+    void createCard(CardDTO cardDTO, Long lid);
 
     CardDTO getCard(Long cid);
 
-    void updateCard(CardDTO cardDTO);
+    void updateCard(CardDTO card);
 
-    void deleteCard(CardDTO cardDTO);
+    void moveCard(CardDTO card);
+
+    void successCard(CardDTO card);
+
+    void deleteCard(CardDTO card);
 
     Long isExistsCard(Long cid);
 }

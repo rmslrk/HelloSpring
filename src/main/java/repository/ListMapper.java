@@ -11,6 +11,8 @@ public interface ListMapper {
 
     void updateList(ListDTO listDTO);
 
+    void moveList(ListDTO listDTO);
+
     void deleteList(ListDTO listDTO);
 
     Long isExistsList(Long lid);

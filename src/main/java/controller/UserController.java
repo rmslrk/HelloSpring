@@ -37,25 +37,26 @@ public class UserController {
         return new ResponseEntity(userService.refresh(), HttpStatus.OK);
     }
 
-    // 토큰 확인
-    @RequestMapping(value = "/checkKey", method = RequestMethod.POST)
-    @ApiOperation(value = "토큰 확인", notes = "토큰 확인 API {토큰}")
-    public ResponseEntity checkKey(@RequestBody String key) throws Exception {
-        return new ResponseEntity(userService.checkKey(key), HttpStatus.OK);
+    // 회원 정보 확인
+    @RequestMapping(value = "/mypage", method = RequestMethod.GET)
+    @ApiOperation(value = "회원 정보 확인", notes = "회원 정보 확인 API")
+    public ResponseEntity mypage() throws Exception{
+        return new ResponseEntity(userService.getLoginUser(), HttpStatus.OK);
     }
 
-    /*
-    // 회원가입
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    @ApiOperation(value = "사용자 추가", notes = "사용자를 추가하기 위한 API")
-    public String hello1(){
-        System.out.println("안녕하세요");
-        return "hello";
+    // 회원 정보 등록
+    @RequestMapping(value = "/setUserInfo", method = RequestMethod.POST)
+    @ApiOperation(value = "회원 정보 등록", notes = "회원 정보 등록 API")
+    public ResponseEntity setUserInfo(@RequestBody @Validated(UserDTO.class) UserDTO user) throws Exception{
+        return new ResponseEntity(userService.setUserInfo(user), HttpStatus.OK);
     }
-    @ResponseBody
-    @RequestMapping(value = "/hello2", method = RequestMethod.GET)
-    public String hello2(){
-        return "hello";
+
+    // 회원 탈퇴
+    @RequestMapping(value = "/withdraw", method = RequestMethod.DELETE)
+    @ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴 API")
+    public ResponseEntity withdraw() throws Exception{
+        userService.deleteUser();
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
-    */
+
 }

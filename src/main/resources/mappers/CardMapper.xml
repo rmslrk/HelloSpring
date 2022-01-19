@@ -6,8 +6,8 @@
 <mapper namespace="repository.CardMapper">
 
     <insert id = "createCard">
-        INSERT INTO todocard('title', 'content', 'target_date')
-        VALUES (#{title}, #{content}, #{target_date})
+        INSERT INTO todocard('lid', 'title', 'content', 'target_date')
+        VALUES (#{lid}, #{title}, #{content}, #{target_date})
     </insert>
 
     <select id="getCard" resultType="domain.CardDTO">
@@ -22,9 +22,21 @@
         WHERE cid = #{cid} AND is_deleted = 0;
     </update>
 
+    <update id="moveCard">
+        UPDATE todocard
+        SET position = #{position}
+        WHERE cid = #{cid} AND is_deleted = 0;
+    </update>
+
+    <update id="successCard">
+        UPDATE todocard
+        SET success = 1
+        WHERE cid = #{cid} AND is_deleted = 0;
+    </update>
+
     <delete id="deleteCard">
         UPDATE todocard
-        SET is_deleted = 1
+        SET is_deleted = 1, position = 0
         WHERE cid = #{cid} AND is_deleted = 0;
     </delete>
 
