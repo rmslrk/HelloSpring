@@ -18,10 +18,12 @@ public class CardServiceImpl implements CardService {
     @Autowired
     private CardMapper cardMapper;
 
+    // 카드 생성 메소드
     @Override
     public void createCard(CardDTO card, Long lid) throws Exception {
 
         UserDTO user = userService.getLoginUser();
+
         //유저 정보가 없는 경우 예외 처리
         if (user==null)
             throw new BaseException(ErrorMessage.INVALID_USER_EXCEPTION);
@@ -29,7 +31,7 @@ public class CardServiceImpl implements CardService {
         cardMapper.createCard(card, lid);
     }
 
-
+    // 카드 정보 읽기 메소드
     @Override
     public CardDTO getCard(Long cid) throws Exception {
         CardDTO card = new CardDTO();
@@ -50,6 +52,7 @@ public class CardServiceImpl implements CardService {
         return card;
     }
 
+    // 카드 정보 업데이트 메소드
     @Override
     public void updateCard(CardDTO card) throws Exception {
 
@@ -57,12 +60,15 @@ public class CardServiceImpl implements CardService {
         //유저 정보가 없는 경우 예외 처리
         if (user==null)
             throw new BaseException(ErrorMessage.INVALID_USER_EXCEPTION);
-
+        
+        // 카드가 존재하지 않는 경우 예외 처리
         if(cardMapper.isExistsCard(card.getCid())==null)
             throw new BaseException(ErrorMessage.CONTENT_NOT_EXISTS);
+
         cardMapper.updateCard(card);
     }
 
+    // 카드의 위치 변경 메소드
     @Override
     public void moveCard(CardDTO card) throws Exception {
 
@@ -71,12 +77,14 @@ public class CardServiceImpl implements CardService {
         if (user==null)
             throw new BaseException(ErrorMessage.INVALID_USER_EXCEPTION);
 
+        // 카드가 존재하지 않는 경우 예외 처리
         if(cardMapper.isExistsCard(card.getCid())==null)
             throw new BaseException(ErrorMessage.CONTENT_NOT_EXISTS);
 
         cardMapper.moveCard(card);
     }
 
+    // 카드의 성공여부 변경 메소드
     @Override
     public void successCard(CardDTO card) throws Exception {
 
@@ -85,12 +93,14 @@ public class CardServiceImpl implements CardService {
         if (user==null)
             throw new BaseException(ErrorMessage.INVALID_USER_EXCEPTION);
 
+        // 카드가 존재하지 않는 경우 예외 처리
         if(cardMapper.isExistsCard(card.getCid())==null)
             throw new BaseException(ErrorMessage.CONTENT_NOT_EXISTS);
 
         cardMapper.successCard(card);
     }
 
+    // 카드 삭제 메소드
     @Override
     public void deleteCard(CardDTO card) throws Exception {
 
@@ -99,6 +109,7 @@ public class CardServiceImpl implements CardService {
         if (user==null)
             throw new BaseException(ErrorMessage.INVALID_USER_EXCEPTION);
 
+        // 카드가 존재하지 않는 경우 예외 처리
         if(cardMapper.isExistsCard(card.getCid())==null)
             throw new BaseException(ErrorMessage.CONTENT_NOT_EXISTS);
 

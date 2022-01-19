@@ -31,6 +31,7 @@ public class UserServiceImpl implements UserService {
 
      @Override
      public BaseResponse signUp(UserDTO user) throws Exception {
+
        // 이메일 중복체크
       if (userMapper.getUserNumToEmail(user.getEmail()) != 0)
           return new BaseResponse("이미 존재하는 이메일입니다.", HttpStatus.OK);
@@ -62,7 +63,8 @@ public class UserServiceImpl implements UserService {
      }
 
 
-    // token의 id를 가져와 User를 반환하는 Method
+    // 현재 로그인한 유저를 가져오는 메소드
+    @Override
     public UserDTO getLoginUser() throws Exception{
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -71,38 +73,41 @@ public class UserServiceImpl implements UserService {
             return null;
         }
         else {
-            // user id로 User를 select 하는것은 자유롭게 해도 좋으나, salt값은 조회,수정 하면안된다. 만약 참고할 일이있으면 정수현에게 다렉을 보내도록하자.
+            // token의 uid를 가져와 user의 데이터를 반환
             Map<String, Object> payloads = jwt.isValid(token);
-            Long id = Long.valueOf(String.valueOf(payloads.get("uid")));
-            return userMapper.getMe(id);
+            Long uid = Long.valueOf(String.valueOf(payloads.get("uid")));
+            return userMapper.getMe(uid);
         }
      }
 
-
+    // 유저의 추가 정보를 설정하는 메소드
     @Override
     public BaseResponse setUserInfo(UserDTO user) throws Exception{
 
+         // dbUser에 현재 로그인한 유저를 가져옴
         UserDTO dbUser = this.getLoginUser();
 
         if (dbUser==null)
             throw new BaseException(ErrorMessage.INVALID_USER_EXCEPTION);
 
-        //updateUser
+        // updateUser
         userMapper.setUserInfo(dbUser.getUid() ,user.getAge(),user.getSex(), user.getPhone_number(),user.getAddress());
         
         return new BaseResponse("회원 정보 등록에 성공했습니다.", HttpStatus.OK);
 
     }
 
+    // 로그인 메소드
     @Override
     public Map<String, String> login(UserDTO user) throws Exception {
-        UserDTO userDTO = userMapper.getUserToEmail(user.getEmail());
+         
         if (user.getEmail() == null)
             throw new Exception("이메일이 잘못되었습니다.");
 
         if (!BCrypt.checkpw(user.getPw(), userMapper.getPwtoEmail(user.getEmail()))) {
             throw new Exception("비밀번호가 잘못되었습니다.");
-        } else {
+        } 
+        else {
             Map<String, String> token = new HashMap<>();
             // 토큰 발급
             token.put("access_token", jwt.createToken(user.getUid(), user.getNickname()));
@@ -110,6 +115,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    // 토큰 재발급 메소드
     @Override
     public Map<String, String> refresh() throws Exception {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -138,12 +144,14 @@ public class UserServiceImpl implements UserService {
         return refresh_token;
     }
 
+    // 회원 탈퇴 메소드
     @Override
     public BaseResponse deleteUser() throws Exception {
 
-         UserDTO dbUser = this.getLoginUser();
+         // 현재 로그인한 유저를 가져옴
+         UserDTO user = this.getLoginUser();
 
-         userMapper.delete(dbUser.getUid());
+         userMapper.delete(user.getUid());
 
         return new BaseResponse("회원 탈퇴에 성공했습니다.", HttpStatus.OK);
     }
