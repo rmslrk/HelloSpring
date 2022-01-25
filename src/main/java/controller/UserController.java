@@ -10,6 +10,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import service.UserService;
 
+
+@RequestMapping(value = "/user")
 @Controller
 public class UserController {
 

@@ -3,7 +3,7 @@ package domain;
 import java.sql.Timestamp;
 
 public class UserDTO {
-    protected long uid;
+    protected long id;
     protected String email;
     protected String pw;
     protected String name;
@@ -18,8 +18,8 @@ public class UserDTO {
 
     protected String salt;
 
-    public void setUid(long uid) {
-        this.uid = uid;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setName(String name) {
@@ -66,8 +66,8 @@ public class UserDTO {
         this.updated_at = updated_at;
     }
 
-    public long getUid() {
-        return uid;
+    public long getId() {
+        return id;
     }
 
     public String getName() {

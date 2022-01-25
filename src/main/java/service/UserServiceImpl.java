@@ -75,8 +75,8 @@ public class UserServiceImpl implements UserService {
         else {
             // token의 uid를 가져와 user의 데이터를 반환
             Map<String, Object> payloads = jwt.isValid(token);
-            Long uid = Long.valueOf(String.valueOf(payloads.get("uid")));
-            return userMapper.getMe(uid);
+            Long id = Long.valueOf(String.valueOf(payloads.get("id")));
+            return userMapper.getMe(id);
         }
      }
 
@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
             throw new BaseException(ErrorMessage.INVALID_USER_EXCEPTION);
 
         // updateUser
-        userMapper.setUserInfo(dbUser.getUid() ,user.getAge(),user.getSex(), user.getPhone_number(),user.getAddress());
+        userMapper.setUserInfo(dbUser.getId() ,user.getAge(),user.getSex(), user.getPhone_number(),user.getAddress());
         
         return new BaseResponse("회원 정보 등록에 성공했습니다.", HttpStatus.OK);
 
@@ -110,7 +110,7 @@ public class UserServiceImpl implements UserService {
         else {
             Map<String, String> token = new HashMap<>();
             // 토큰 발급
-            token.put("access_token", jwt.createToken(user.getUid(), user.getNickname()));
+            token.put("access_token", jwt.createToken(user.getId(), user.getNickname()));
             return token;
         }
     }
@@ -132,7 +132,7 @@ public class UserServiceImpl implements UserService {
 
         // user 정보 저장
         UserDTO user = new UserDTO();
-        user.setUid(uid);
+        user.setId(uid);
         user.setNickname(payloads.get("nickname").toString());
 
         //UserMapper userMapper = null;
@@ -140,7 +140,7 @@ public class UserServiceImpl implements UserService {
 
         // 토큰 재발급
         Map<String, String> refresh_token = new HashMap<>();
-        refresh_token.put("access_token", new Jwt().createToken(user.getUid(), user.getNickname()));
+        refresh_token.put("access_token", new Jwt().createToken(user.getId(), user.getNickname()));
         return refresh_token;
     }
 
@@ -151,7 +151,7 @@ public class UserServiceImpl implements UserService {
          // 현재 로그인한 유저를 가져옴
          UserDTO user = this.getLoginUser();
 
-         userMapper.delete(user.getUid());
+         userMapper.delete(user.getId());
 
         return new BaseResponse("회원 탈퇴에 성공했습니다.", HttpStatus.OK);
     }

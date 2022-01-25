@@ -6,45 +6,155 @@
 <mapper namespace="repository.CardMapper">
 
     <insert id = "createCard">
-        INSERT INTO todocard('lid', 'title', 'content', 'target_date')
-        VALUES (#{lid}, #{title}, #{content}, #{target_date})
+        INSERT INTO todocard('id', 'title', 'content', 'target_date')
+        VALUES (#{id}, #{title}, #{content}, #{target_date})
     </insert>
 
     <select id="getCard" resultType="domain.CardDTO">
         SELECT *
         FROM todocard
-        WHERE cid = #{cid} AND is_deleted = 0;
+        WHERE id = #{id} AND is_deleted = 0;
+    </select>
+
+    <select id="getSearchCardList" resultMap="domain.CardDTO">
+        SELECT *
+        FROM todocard TC
+        LEFT OUTER JOIN todolist TL ON TC.lid = TL.lid
+        WHERE TC.is_deleted = 0
+        <choose>
+            <when test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cardCriteria.search)">
+                AND ((TC.title like concat('%',#{cardCriteria.search},'%')))
+            </when>
+        </choose>
+
+        <choose>
+            <when test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(user)">
+                AND TL.uid = #{user.uid}
+            </when>
+        </choose>
+
+        <choose>
+
+            <!--정렬 옵션이 있을 때-->
+            <when test="cardCriteria.sort!=null">
+                <choose>
+                    <when test='(lectureCriteria.sort eq "생성순".toString())'>
+                        ORDER BY TC.created_at ASC
+                    </when>
+
+                    <when test='(lectureCriteria.sort eq "수정순".toString())'>
+                        ORDER BY TC.updated_at ASC
+                    </when>
+
+                    <when test='(lectureCriteria.sort eq "목표일자순".toString())'>
+                        ORDER BY TC.target_date ASC
+                    </when>
+                </choose>
+            </when>
+
+            <!--정렬 옵션이 없을 때 : 제목 정렬 -->
+            <otherwise>
+                ORDER BY TL.title ASC
+            </otherwise>
+        </choose>
+        LIMIT #{cardCriteria.cursor}, #{cardCriteria.limit}
+    </select>
+
+    <select id="getCountCardList" resultMap="domain.CardDTO">
+        SELECT count(*)
+        FROM todocard TC
+        LEFT OUTER JOIN todolist TL ON TC.lid = TL.lid
+        WHERE TC.is_deleted = 0
+        <choose>
+            <when test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(cardCriteria.search)">
+                AND ((TC.title like concat('%',#{cardCriteria.search},'%')))
+            </when>
+        </choose>
+
+        <choose>
+            <when test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(user)">
+                AND TL.uid = #{user.uid}
+            </when>
+        </choose>
+
+        <choose>
+
+            <!--정렬 옵션이 있을 때-->
+            <when test="cardCriteria.sort!=null">
+                <choose>
+                    <when test='(lectureCriteria.sort eq "생성순".toString())'>
+                        ORDER BY TC.created_at ASC
+                    </when>
+
+                    <when test='(lectureCriteria.sort eq "수정순".toString())'>
+                        ORDER BY TC.updated_at ASC
+                    </when>
+
+                    <when test='(lectureCriteria.sort eq "목표일자순".toString())'>
+                        ORDER BY TC.target_date ASC
+                    </when>
+                </choose>
+            </when>
+
+            <!--정렬 옵션이 없을 때 : 제목 정렬 -->
+            <otherwise>
+                ORDER BY TL.title ASC
+            </otherwise>
+        </choose>
+        LIMIT #{cardCriteria.cursor}, #{cardCriteria.limit}
+    </select>
+
+    <select id="getExpireCardList" resultMap="domain.CardDTO">
+        SELECT *
+        FROM todocard TC
+        LEFT OUTER JOIN todolist TL ON TC.lid = TL.lid
+        WHERE TC.is_deleted = 0 AND TC.success = 0
+
+        <!-- 목표일자보다 3일 전 이내의 DATE를 가진 데이터 -->
+        AND (DATE(now()) <![CDATA[>=]]> DATE(SUBDATE(TC.target_date, INTERVAL 3 DAY)))
+
+        <!-- 목표일자 이후의 DATE를 가진 데이터 -->
+        AND (DATE(now()) <![CDATA[<]]> DATE(TC.target_date))
+
+        <choose>
+            <when test="@org.apache.commons.lang3.ObjectUtils@isNotEmpty(user)">
+                AND TL.uid = #{user.uid}
+            </when>
+        </choose>
+
+
+        ORDER BY TL.target_date ASC
+        LIMIT #{cardCriteria.cursor}, #{cardCriteria.limit}
     </select>
 
     <update id="updateCard">
         UPDATE todocard
         SET title = #{title}, content = #{content}
-        WHERE cid = #{cid} AND is_deleted = 0;
+        WHERE id = #{id} AND is_deleted = 0;
     </update>
 
     <update id="moveCard">
         UPDATE todocard
         SET position = #{position}
-        WHERE cid = #{cid} AND is_deleted = 0;
+        WHERE id = #{id} AND is_deleted = 0;
     </update>
 
     <update id="successCard">
         UPDATE todocard
         SET success = 1
-        WHERE cid = #{cid} AND is_deleted = 0;
+        WHERE id = #{id} AND is_deleted = 0 AND target_date = DATE(CURRENT_TIMESTAMP) ;
     </update>
 
     <delete id="deleteCard">
         UPDATE todocard
         SET is_deleted = 1, position = 0
-        WHERE cid = #{cid} AND is_deleted = 0;
+        WHERE id = #{id} AND is_deleted = 0;
     </delete>
 
     <select id="isExistsCard" resultType="Long">
-        SELECT cid
+        SELECT id
         FROM todocard
-        WHERE cid = #{cid} AND is_deleted = 0;
+        WHERE id = #{id} AND is_deleted = 0;
     </select>
 
 </mapper>
-

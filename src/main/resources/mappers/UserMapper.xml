@@ -12,12 +12,12 @@
 
     <update id ="setUserInfo">
         UPDATE user
-        SET age = #{age}, sex = #{sex}, phone_number = #{phone_number}, address = #{address}
-        WHERE uid = #{uid} AND is_deleted = 0;
+        SET age = #{age}, sex = #{sex}, phone_number = #{phone_number}, address = #{address} , updated_at = CURRENT_TIMESTAMP
+        WHERE id = #{id} AND is_deleted = 0;
     </update>
 
     <select id="getUidToEmail" resultType="string">
-        SELECT uid
+        SELECT id
         FROM user
         WHERE email = #{email} AND is_deleted = 0;
     </select>
@@ -31,7 +31,7 @@
     <select id="getSaltToUid" resultType="string">
         SELECT salt
         FROM user
-        WHERE uid = #{uid} AND is_deleted = 0;
+        WHERE id = #{id} AND is_deleted = 0;
     </select>
 
     <select id="getUsertoEmail" resultType="domain.UserDTO">
@@ -43,13 +43,13 @@
     <select id="getMe" resultType="domain.UserDTO">
         SELECT email,pw,name,nickname,age,sex,phone_number,address,is_deleted
         FROM user
-        WHERE uid = #{uid} and is_deleted =0
+        WHERE id = #{id} and is_deleted =0
     </select>
 
     <update id="DeleteUser">
         UPDATE user
         SET is_deleted = 1
-        WHERE uid = #{uid}
+        WHERE id = #{id}
     </update>
 
 </mapper>

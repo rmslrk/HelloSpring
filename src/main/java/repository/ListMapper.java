@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 public interface ListMapper {
     void createList(ListDTO listDTO);
 
-    ListDTO getList(Long cid);
+    ListDTO getList(Long id);
 
     void updateList(ListDTO listDTO);
 
@@ -15,5 +15,5 @@ public interface ListMapper {
 
     void deleteList(ListDTO listDTO);
 
-    Long isExistsList(Long lid);
+    Long isExistsList(Long id);
 }

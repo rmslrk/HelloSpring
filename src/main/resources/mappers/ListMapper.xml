@@ -6,38 +6,38 @@
 <mapper namespace="repository.ListMapper">
 
     <insert id = "createList">
-        INSERT INTO todolist('uid', 'title')
-        VALUES (#{uid}, #{title})
+        INSERT INTO todolist('id', 'title')
+        VALUES (#{id}, #{title})
     </insert>
 
     <select id="getList" resultType="domain.ListDTO">
         SELECT *
         FROM todolist
-        WHERE lid = #{lid} AND is_deleted = 0;
+        WHERE id = #{id} AND is_deleted = 0
     </select>
 
     <update id="updateList">
         UPDATE todolist
         SET title = #{title}
-        WHERE lid = #{lid} AND is_deleted = 0;
+        WHERE id = #{id} AND is_deleted = 0
     </update>
 
     <update id="moveList">
         UPDATE todolist
         SET position = #{position}
-        WHERE lid = #{lid} AND is_deleted = 0;
+        WHERE id = #lid} AND is_deleted = 0
     </update>
 
     <delete id="deleteList">
         UPDATE todolist
         SET is_deleted = 1, position = 0
-        WHERE lid = #{lid} AND is_deleted = 0;
+        WHERE id = #{id} AND is_deleted = 0
     </delete>
 
     <select id="isExistsList" resultType="Long">
         SELECT lid
         FROM todolist
-        WHERE lid = #{lid} AND is_deleted = 0;
+        WHERE id = #{id} AND is_deleted = 0
     </select>
 
 

@@ -3,7 +3,7 @@ package domain;
 import java.sql.Timestamp;
 
 public class CardDTO {
-    protected long cid;
+    protected long id;
     protected long lid;
     protected String title;
     protected String content;
@@ -14,8 +14,8 @@ public class CardDTO {
     protected Timestamp created_at;
     protected Timestamp updated_at;
 
-    public long getCid() {
-        return cid;
+    public long getId() {
+        return id;
     }
 
     public long getLid() {
@@ -52,8 +52,8 @@ public class CardDTO {
         return updated_at;
     }
 
-    public void setCid(long cid) {
-        this.cid = cid;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setLid(long lid) {

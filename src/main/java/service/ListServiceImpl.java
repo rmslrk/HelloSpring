@@ -31,7 +31,7 @@ public class ListServiceImpl implements ListService {
 
     // 리스트 정보 읽기 메소드
     @Override
-    public ListDTO getList(Long lid) throws Exception {
+    public ListDTO getList(Long id) throws Exception {
         ListDTO list = new ListDTO();
 
         UserDTO user = userService.getLoginUser();
@@ -40,13 +40,13 @@ public class ListServiceImpl implements ListService {
         if (user==null)
             throw new BaseException(ErrorMessage.INVALID_USER_EXCEPTION);
 
-        // 해당 lid의 카드가 존재하지 않는다면 임의로 값을 넣어 출력
-        if(listMapper.isExistsList(lid)==null) {
+        // 해당 id의 카드가 존재하지 않는다면 임의로 값을 넣어 출력
+        if(listMapper.isExistsList(id)==null) {
             list.setTitle("");
             return list;
         }
 
-        list = listMapper.getList(lid);
+        list = listMapper.getList(id);
 
         return list;
     }
@@ -62,7 +62,7 @@ public class ListServiceImpl implements ListService {
             throw new BaseException(ErrorMessage.INVALID_USER_EXCEPTION);
 
         // 리스트가 존재하지 않는 경우 예외 처리
-        if(listMapper.isExistsList(list.getLid())==null)
+        if(listMapper.isExistsList(list.getId())==null)
             throw new BaseException(ErrorMessage.CONTENT_NOT_EXISTS);
 
         listMapper.updateList(list);
@@ -78,7 +78,7 @@ public class ListServiceImpl implements ListService {
             throw new BaseException(ErrorMessage.INVALID_USER_EXCEPTION);
 
         // 리스트가 존재하지 않는 경우 예외 처리
-        if(listMapper.isExistsList(list.getLid())==null)
+        if(listMapper.isExistsList(list.getId())==null)
             throw new BaseException(ErrorMessage.CONTENT_NOT_EXISTS);
 
         listMapper.moveList(list);
@@ -94,7 +94,7 @@ public class ListServiceImpl implements ListService {
             throw new BaseException(ErrorMessage.INVALID_USER_EXCEPTION);
 
         // 리스트가 존재하지 않는 경우 예외 처리
-        if(listMapper.isExistsList(list.getLid())==null)
+        if(listMapper.isExistsList(list.getId())==null)
             throw new BaseException(ErrorMessage.CONTENT_NOT_EXISTS);
 
         listMapper.deleteList(list);

@@ -3,7 +3,7 @@ package domain;
 import java.sql.Timestamp;
 
 public class ListDTO {
-    protected long lid;
+    protected long id;
     protected long uid;
     protected String title;
     protected int position;
@@ -11,7 +11,7 @@ public class ListDTO {
     protected Timestamp created_at;
     protected Timestamp updated_at;
 
-    public Long getLid() { return lid; }
+    public Long getId() { return id; }
 
     public Long getUid() { return uid; }
 
@@ -33,8 +33,8 @@ public class ListDTO {
         return updated_at;
     }
 
-    public void setLid(long lid) {
-        this.lid = lid;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setUid(long uid) {
