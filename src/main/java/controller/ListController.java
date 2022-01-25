@@ -45,7 +45,7 @@ public class ListController {
     }
 
     @ApiOperation( value = "리스트 이동", notes = "리스트를 이동합니다.")
-    @RequestMapping(value = "/moveList", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/position", method = RequestMethod.PATCH)
     public ResponseEntity moveList(@Validated(ListDTO.class) @RequestBody ListDTO list) throws Exception{
         listService.moveList(list);
         return new ResponseEntity( new BaseResponse("리스트가 정상적으로 이동했습니다.", HttpStatus.OK), HttpStatus.OK);

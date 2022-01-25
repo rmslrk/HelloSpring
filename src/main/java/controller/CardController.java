@@ -55,7 +55,7 @@ public class CardController {
     }
 
     @ApiOperation( value = "카드 이동", notes = "카드를 이동합니다.")
-    @RequestMapping(value = "/", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/position", method = RequestMethod.PATCH)
     public ResponseEntity moveCard(@Validated(CardDTO.class) @RequestBody CardDTO card) throws Exception{
         cardService.moveCard(card);
         return new ResponseEntity( new BaseResponse("카드가 정상적으로 이동했습니다.", HttpStatus.OK), HttpStatus.OK);

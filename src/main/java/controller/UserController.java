@@ -47,7 +47,7 @@ public class UserController {
     }
 
     // 회원 정보 등록
-    @RequestMapping(value = "/setUserInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "/userInfo", method = RequestMethod.POST)
     @ApiOperation(value = "회원 정보 등록", notes = "회원 정보 등록 API")
     public ResponseEntity setUserInfo(@RequestBody @Validated(UserDTO.class) UserDTO user) throws Exception{
         return new ResponseEntity(userService.setUserInfo(user), HttpStatus.OK);
