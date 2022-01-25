@@ -33,7 +33,7 @@ public class UserController {
     }
 
     // 토큰 초기화
-    @RequestMapping(value = "/refresh", method = RequestMethod.POST)
+    @RequestMapping(value = "/refresh", method = RequestMethod.PATCH)
     @ApiOperation(value = "토큰 초기화", notes = "토큰 초기화 API")
     public ResponseEntity refresh() throws Exception {
         return new ResponseEntity(userService.refresh(), HttpStatus.OK);
@@ -47,7 +47,7 @@ public class UserController {
     }
 
     // 회원 정보 등록
-    @RequestMapping(value = "/userInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "/userInfo", method = RequestMethod.PATCH)
     @ApiOperation(value = "회원 정보 등록", notes = "회원 정보 등록 API")
     public ResponseEntity setUserInfo(@RequestBody @Validated(UserDTO.class) UserDTO user) throws Exception{
         return new ResponseEntity(userService.setUserInfo(user), HttpStatus.OK);
