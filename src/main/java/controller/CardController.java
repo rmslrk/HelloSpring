@@ -29,7 +29,7 @@ public class CardController {
     @ApiOperation(value = "카드 목록 조회", notes = "검색 내용에 맞춰 카드를 검색합니다.\n" +
             "search :  (카드 제목)\n " +
             "limit, page : 페이지네이션")
-    @RequestMapping(value = "/cards", method = RequestMethod.GET)
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
     public ResponseEntity getSearchCardList(@ModelAttribute CardCriteria cardCriteria) throws Exception {
         return new ResponseEntity (cardService.getSearchCardList(cardCriteria), HttpStatus.OK);
     }
@@ -55,14 +55,14 @@ public class CardController {
     }
 
     @ApiOperation( value = "카드 이동", notes = "카드를 이동합니다.")
-    @RequestMapping(value = "/moveCard", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/", method = RequestMethod.PATCH)
     public ResponseEntity moveCard(@Validated(CardDTO.class) @RequestBody CardDTO card) throws Exception{
         cardService.moveCard(card);
         return new ResponseEntity( new BaseResponse("카드가 정상적으로 이동했습니다.", HttpStatus.OK), HttpStatus.OK);
     }
 
     @ApiOperation( value = "카드 성공", notes = "카드를 성공시킵니다.")
-    @RequestMapping(value = "/successCard", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/success", method = RequestMethod.PATCH)
     public ResponseEntity successCard(@Validated(CardDTO.class) @RequestBody CardDTO card) throws Exception{
         cardService.successCard(card);
         return new ResponseEntity( new BaseResponse("카드가 정상적으로 성공했습니다.", HttpStatus.OK), HttpStatus.OK);

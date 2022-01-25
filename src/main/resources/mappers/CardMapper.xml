@@ -133,6 +133,7 @@
         WHERE id = #{id} AND is_deleted = 0;
     </update>
 
+    <!-- 이동 시 다른 카드들의 position도 이동해야함 -->
     <update id="moveCard">
         UPDATE todocard
         SET position = #{position}

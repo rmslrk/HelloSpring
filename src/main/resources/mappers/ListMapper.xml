@@ -22,6 +22,7 @@
         WHERE id = #{id} AND is_deleted = 0
     </update>
 
+    <!-- 이동 시 다른 리스트들의 position도 이동해야함 -->
     <update id="moveList">
         UPDATE todolist
         SET position = #{position}
