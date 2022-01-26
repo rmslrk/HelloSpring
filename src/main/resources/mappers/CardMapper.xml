@@ -107,10 +107,12 @@
         WHERE id = #{card.id} AND is_deleted = 0;
     </update>
 
-    <!-- 이동 시 다른 카드들의 position도 이동해야함 -->
+    <!-- 이동 시 다른 카드들의 position도 이동해야함  : 이러면 안될듯 -->
     <update id="moveCard">
         UPDATE todocard
-        SET position = #{card.position}
+        SET
+            position = CASE id  WHEN #{card.id} THEN #{position}
+            position = CASE position WHEN #{position} THEN #{card.position}
         WHERE id = #{card.id} AND is_deleted = 0;
     </update>
 

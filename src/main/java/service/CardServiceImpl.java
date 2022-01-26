@@ -100,7 +100,7 @@ public class CardServiceImpl implements CardService {
 
     // 카드의 위치 변경 메소드
     @Override
-    public void moveCard(CardDTO card) throws Exception {
+    public void moveCard(CardDTO card, Long other_position) throws Exception {
 
         UserDTO user = userService.getLoginUser();
         //유저 정보가 없는 경우 예외 처리
@@ -111,7 +111,9 @@ public class CardServiceImpl implements CardService {
         if(cardMapper.isExistsCard(card.getId())==null)
             throw new BaseException(ErrorMessage.CONTENT_NOT_EXISTS);
 
-        cardMapper.moveCard(card);
+
+
+        cardMapper.moveCard(card, other_position);
     }
 
     // 카드의 성공여부 변경 메소드

@@ -15,6 +15,6 @@ public interface CardService {
     void deleteCard(CardDTO card) throws Exception;
     void updateCard(CardDTO card) throws Exception;
     void successCard(CardDTO card) throws Exception;
-    void moveCard(CardDTO card) throws Exception;
+    void moveCard(CardDTO card, Long other_position) throws Exception;
 
 }

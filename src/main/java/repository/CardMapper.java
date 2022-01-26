@@ -23,7 +23,7 @@ public interface CardMapper {
 
     void updateCard(@Param("card") CardDTO card);
 
-    void moveCard(@Param("card") CardDTO card);
+    void moveCard(@Param("card") CardDTO card, Long position);
 
     void successCard(@Param("card") CardDTO card);
 
