@@ -52,9 +52,9 @@
                 </choose>
             </when>
 
-            <!--정렬 옵션이 없을 때 : 제목 정렬 -->
+            <!--정렬 옵션이 없을 때 : position 정렬 -->
             <otherwise>
-                ORDER BY TL.title ASC
+                ORDER BY TL.position ASC
             </otherwise>
         </choose>
         LIMIT #{cardCriteria.cursor}, #{cardCriteria.limit}
@@ -76,32 +76,6 @@
                 AND TL.uid = #{user.uid}
             </when>
         </choose>
-
-        <choose>
-
-            <!--정렬 옵션이 있을 때-->
-            <when test="cardCriteria.sort!=null">
-                <choose>
-                    <when test='(lectureCriteria.sort eq "생성순".toString())'>
-                        ORDER BY TC.created_at ASC
-                    </when>
-
-                    <when test='(lectureCriteria.sort eq "수정순".toString())'>
-                        ORDER BY TC.updated_at ASC
-                    </when>
-
-                    <when test='(lectureCriteria.sort eq "목표일자순".toString())'>
-                        ORDER BY TC.target_date ASC
-                    </when>
-                </choose>
-            </when>
-
-            <!--정렬 옵션이 없을 때 : 제목 정렬 -->
-            <otherwise>
-                ORDER BY TL.title ASC
-            </otherwise>
-        </choose>
-        LIMIT #{cardCriteria.cursor}, #{cardCriteria.limit}
     </select>
 
     <select id="getExpireCardList" resultMap="domain.CardDTO">

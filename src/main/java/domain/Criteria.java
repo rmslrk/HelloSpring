@@ -7,8 +7,8 @@ public class Criteria {
     @ApiParam(required = false, defaultValue = "1")
     private int page = 1;
 
-    @ApiParam(required = false, defaultValue = "10")
-    private int limit = 10;
+    @ApiParam(required = false, defaultValue = "5")
+    private int limit = 5;
 
     @ApiModelProperty(hidden = true)
     private int cursor;
