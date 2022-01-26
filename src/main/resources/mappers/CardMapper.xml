@@ -123,7 +123,7 @@
     <delete id="deleteCard">
         UPDATE todocard
         SET is_deleted = 1, position = 0
-        WHERE id = #{id} AND is_deleted = 0;
+        WHERE id = #{card.id} AND is_deleted = 0;
     </delete>
 
     <select id="isExistsCard" resultType="Long">

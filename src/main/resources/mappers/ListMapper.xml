@@ -7,7 +7,7 @@
 
     <insert id = "createList">
         INSERT INTO todolist('id', 'title')
-        VALUES (#{id}, #{title})
+        VALUES (#{list.id}, #{list.title})
     </insert>
 
     <select id="getList" resultType="domain.ListDTO">
@@ -18,21 +18,21 @@
 
     <update id="updateList">
         UPDATE todolist
-        SET title = #{title}
-        WHERE id = #{id} AND is_deleted = 0
+        SET title = #{list.title}
+        WHERE id = #{list.id} AND is_deleted = 0
     </update>
 
     <!-- 이동 시 다른 리스트들의 position도 이동해야함 -->
     <update id="moveList">
         UPDATE todolist
-        SET position = #{position}
+        SET position = #{list.position}
         WHERE id = #lid} AND is_deleted = 0
     </update>
 
     <delete id="deleteList">
         UPDATE todolist
         SET is_deleted = 1, position = 0
-        WHERE id = #{id} AND is_deleted = 0
+        WHERE id = #{list.id} AND is_deleted = 0
     </delete>
 
     <select id="isExistsList" resultType="Long">
