@@ -20,7 +20,7 @@ public class UserController {
 
     // 회원가입
     @RequestMapping(value = "/signUp", method = RequestMethod.POST)
-    @ApiOperation(value = "회원가입", notes = "회원가입 API {이메일, 비밀번호, 이름, 닉네임}")
+    @ApiOperation(value = "회원가입", notes = "회원가입을 진행합니다 {이메일, 비밀번호, 이름, 닉네임}")
     public ResponseEntity signUp(@RequestBody @Validated(UserDTO.class) UserDTO user) throws Exception {
         return new ResponseEntity(userService.signUp(user), HttpStatus.OK);
     }

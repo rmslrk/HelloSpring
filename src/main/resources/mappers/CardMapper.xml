@@ -6,8 +6,8 @@
 <mapper namespace="repository.CardMapper">
 
     <insert id = "createCard">
-        INSERT INTO todocard('id', 'title', 'content', 'target_date')
-        VALUES (#{id}, #{title}, #{content}, #{target_date})
+        INSERT INTO todocard('id', 'title', 'content', 'target_date', 'lid')
+        VALUES (#{card.id}, #{card.title}, #{card.content}, #{card.target_date}, #{lid})
     </insert>
 
     <select id="getCard" resultType="domain.CardDTO">
@@ -129,21 +129,21 @@
 
     <update id="updateCard">
         UPDATE todocard
-        SET title = #{title}, content = #{content}
-        WHERE id = #{id} AND is_deleted = 0;
+        SET title = #{card.title}, content = #{card.content}
+        WHERE id = #{card.id} AND is_deleted = 0;
     </update>
 
     <!-- 이동 시 다른 카드들의 position도 이동해야함 -->
     <update id="moveCard">
         UPDATE todocard
-        SET position = #{position}
-        WHERE id = #{id} AND is_deleted = 0;
+        SET position = #{card.position}
+        WHERE id = #{card.id} AND is_deleted = 0;
     </update>
 
     <update id="successCard">
         UPDATE todocard
         SET success = 1
-        WHERE id = #{id} AND is_deleted = 0 AND target_date = DATE(CURRENT_TIMESTAMP) ;
+        WHERE id = #{card.id} AND is_deleted = 0 AND target_date = DATE(CURRENT_TIMESTAMP) ;
     </update>
 
     <delete id="deleteCard">

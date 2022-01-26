@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface CardMapper {
-    void createCard(CardDTO cardDTO, Long lid);
+    void createCard(@Param("card") CardDTO cardDTO, Long lid);
 
     CardDTO getCard(Long id);
 
@@ -21,13 +21,13 @@ public interface CardMapper {
 
     List<CardDTO> getExpireCardList(@Param("cardCriteria") CardCriteria cardCriteria, @Param("user") UserDTO user);
 
-    void updateCard(CardDTO card);
+    void updateCard(@Param("card") CardDTO card);
 
-    void moveCard(CardDTO card);
+    void moveCard(@Param("card") CardDTO card);
 
-    void successCard(CardDTO card);
+    void successCard(@Param("card") CardDTO card);
 
-    void deleteCard(CardDTO card);
+    void deleteCard(@Param("card") CardDTO card);
 
     Long isExistsCard(Long cid);
 }

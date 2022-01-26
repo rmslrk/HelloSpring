@@ -37,7 +37,7 @@ public class ListController {
         return new ResponseEntity<ListDTO>(listService.getList(id), HttpStatus.OK);
     }
 
-    @ApiOperation( value = "리스트 수정", notes = "리스트를 수정합니다.")
+    @ApiOperation( value = "리스트 수정", notes = "리스트를 수정합니다. {}")
     @RequestMapping(value = "", method = RequestMethod.PATCH)
     public ResponseEntity updateList(@Validated(ListDTO.class) @RequestBody ListDTO list) throws Exception{
         listService.updateList(list);
